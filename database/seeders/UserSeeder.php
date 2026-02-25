@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     {
         $user = [
             'name' => 'admin', 
+            'cpf' => '09876543210',
             'email' => 'admin@admin.com', 
             'password' => '12345678'
         ];

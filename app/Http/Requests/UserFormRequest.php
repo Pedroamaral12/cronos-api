@@ -11,7 +11,7 @@ class UserFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,25 @@ class UserFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $rules = [];
+        
+        if ($this->isMethod('POST')) {
+            $rules = [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6',
+                'cpf' => 'nullable|string|unique:users,cpf',
+            ];
+        }
+
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => 'sometimes|required|string|max:255',
+                'email' => 'sometimes|required|email|unique:users,email,' . $this->route('id'),
+                'cpf' => 'nullable|string|unique:users,cpf,' . $this->route('id'),
+            ];
+        }
+
+        return $rules;
     }
 }

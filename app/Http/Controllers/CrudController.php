@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\Contracts\CrudServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class CrudController extends Controller
 {
@@ -38,6 +35,7 @@ abstract class CrudController extends Controller
         
         return response()->json([
             'success' => true,
+            'message' => 'Select options retrieved successfully',
             'data' => $data
         ]);
     }
@@ -62,7 +60,7 @@ abstract class CrudController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $data = $this->service->create($request->validated());
+        $data = $this->service->create($request->all());
         
         return response()->json([
             'success' => true,
@@ -73,7 +71,7 @@ abstract class CrudController extends Controller
 
     public function update(int $id, Request $request): JsonResponse
     {
-        $data = $this->service->update($id, $request->validated());
+        $data = $this->service->update($id, $request->all());
         
         return response()->json([
             'success' => true,

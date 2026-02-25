@@ -27,7 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
     /**
      *   ## User Routes ##
      */
-    HasCrudRoutes::crudResource('user', UserController::class, [
-        'middleware' => ['auth:sanctum']
+    HasCrudRoutes::crudResource('users', UserController::class, [
+        'except' => ['store', 'update'],
     ]);
+
+    Route::post('/users', [UserController::class, 'beforeStore'])->middleware('auth:sanctum');
+    Route::put('/users/{id}', [UserController::class, 'beforeUpdate'])->middleware('auth:sanctum');
 });

@@ -14,7 +14,9 @@ class AuthRepository
 
     public function login(array $data)
     {
-         if (isset($data['email'])) {
+        $user = null;
+        
+        if (isset($data['email'])) {
             $user = $this->entity->where('email', $data['email'])->first();
         }
         

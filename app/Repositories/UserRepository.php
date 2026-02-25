@@ -9,5 +9,6 @@ class UserRepository extends BaseRepository
     public function __construct(
         private User $entity
     ) {
+        parent::__construct($entity);
     }
 }
