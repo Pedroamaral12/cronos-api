@@ -12,8 +12,25 @@ class AuthService
         
     }
     
-    public function login(array $data): array
+    public function login(array $data)
     {
-        return $this->repository->login($data);
+        $user = $this->repository->login($data);
+        
+        if (!$user) {
+            return null;
+        }
+        
+        $token = $user->createToken('auth_token')->plainTextToken;
+        
+        return [
+            'user' => $user,
+            'token' => $token,
+        ];
+    }
+    
+    public function logout($user)
+    {
+        $user->currentAccessToken()->delete();
+        return true;
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\UserService;
 
-class UserController extends Controller
+class UserController extends CrudController
 {
-    //
+    public function __construct(UserService $userService)
+    {
+        parent::__construct($userService);
+    }
 }
